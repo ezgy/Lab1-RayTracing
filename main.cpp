@@ -160,13 +160,19 @@ int main() {
 
             Color pixel;
 
-            // Get center of pixel coordinate
-            float cx = ((float)i) + 0.5f;
-            float cy = ((float)j) + 0.5f;
-
-            // Get a ray and trace it
-            Ray r = camera.getRay(cx, cy);
-            pixel = traceRay(r, scene, depth);
+           for (int x = 0; x < 3; ++x) {
+                for (int y = 0; y < 3; ++y) {
+                // Get center of pixel coordinate
+                    float cx = (float)i +( x + uniform()) / 3.0f;
+                    float cy = (float)j +( y + uniform()) / 3.0f ;
+                // Get a ray and trace it
+                    Ray r = camera.getRay(cx, cy);
+                    pixel += traceRay(r, scene, depth);
+                }
+            }
+           
+           pixel *= (1.0f/ 9.0f);
+         
 
             // Write pixel value to image
             writeColor((j * imageWidth + i) * numChannels, pixel, pixels);
